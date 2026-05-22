@@ -44,7 +44,7 @@ body {
   background: var(--white);
   color: var(--black);
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
   width: 100%;
@@ -219,7 +219,7 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
 /* ─── HERO ─── */
 #hero {
   min-height: 100vh; display: flex;
-  align-items: center; padding-top: 100px; padding-bottom: 60px;
+  align-items: center; padding-top: 100px; padding-bottom: 20px;
   border-bottom: 0.5px solid var(--gray-1); position: relative;
 }
 
@@ -238,15 +238,31 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
 
 .hero-inner {
   width: 100%; display: grid;
-  grid-template-columns: 1fr 380px; gap: 80px;
-  align-items: end; position: relative; z-index: 1;
+  grid-template-columns: 1fr 520px; gap: 80px;
+  align-items: start; position: relative; z-index: 1;
 }
 
 .hero-headline {
   font-family: var(--font-serif);
-  font-size: clamp(56px, 8vw, 96px);
-  line-height: 1.0; font-weight: 400; letter-spacing: -0.02em;
+  font-size: clamp(56px, 8vw, 104px);
+  line-height: 1.0; font-weight: 400; letter-spacing: -0.025em;
+  color: var(--black);
 }
+.hero-headline .accent-word { color: var(--accent); }
+
+.hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  margin-top: 24px;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero-name em { font-style: italic; color: var(--gray-3); font-size: 0.6em; }
+.hero-name-sep { color: var(--gray-2); font-size: 0.6em; }
 
 .hero-headline .word { display: inline-block; overflow: hidden; padding-bottom: 0.18em; margin-bottom: -0.18em; }
 .hero-headline .word-inner {
@@ -259,10 +275,8 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
 .hero-headline .word:nth-child(3) .word-inner { animation-delay: 0.32s; }
 @keyframes wordReveal { to { transform: translateY(0); } }
 
-.hero-headline em { font-style: italic; color: var(--gray-3); }
-
 .hero-right {
-  padding-bottom: 12px;
+  padding-top: 32px;
   opacity: 0;
   animation: fadeUp 0.8s 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -271,7 +285,7 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
   to   { opacity: 1; transform: none; }
 }
 
-.hero-bio { font-size: 14px; color: var(--gray-4); line-height: 1.7; margin-bottom: 28px; }
+.hero-bio { font-size: 16px; color: var(--gray-4); line-height: 1.7; margin-bottom: 28px; }
 
 .hero-link {
   display: inline-flex; align-items: center; gap: 6px;
@@ -284,8 +298,26 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
 .hero-link:hover { color: var(--accent); border-color: var(--accent); }
 .hero-link:hover::after { transform: translateX(4px); }
 
+.hero-scroll-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 28px;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--black); text-decoration: none;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: color 0.2s, gap 0.2s;
+}
+.hero-scroll-arrow {
+  display: inline-block;
+  font-size: 15px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-scroll-link:hover { color: var(--accent); gap: 14px; }
+.hero-scroll-link:hover .hero-scroll-arrow { transform: translateX(4px); }
+
 /* ─── PROJECTS ─── */
-#projects { border-bottom: 0.5px solid var(--gray-1); }
+#projects { border-bottom: 0.5px solid var(--gray-1); padding-top: 72px; }
 
 .projects-header {
   display: flex; justify-content: space-between;
@@ -301,12 +333,23 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
 .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
 
 .project-card {
-  border: 0.5px solid var(--gray-1); padding: 40px;
+  border: 0.5px solid var(--gray-1); padding: 28px;
   position: relative; overflow: hidden;
-  min-height: 360px; display: flex;
-  flex-direction: column; justify-content: space-between;
+  min-height: 280px; display: flex;
+  flex-direction: column; justify-content: flex-start;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  background: var(--white);
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px -10px rgba(0,0,0,0.12), 0 4px 12px -4px rgba(0,0,0,0.06);
+}
+.project-card:hover .project-cover img {
+  transform: scale(1.02);
 }
 .project-card::before { display: none; }
+.project-card.featured > div:last-child { margin-top: auto; }
 
 .project-card-actions {
   display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;
@@ -339,6 +382,13 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
 .project-download:hover { border-color: var(--black); color: var(--black); }
 
 .project-card.featured { grid-column: 1; grid-row: 1 / 3; }
+.project-card.featured .project-cover { aspect-ratio: auto; flex: 1 1 auto; min-height: 600px; padding: 0; }
+/* When featured card also has cover-fill, keep the tall layout but let image fill */
+.project-card.featured .project-cover.cover-fill {
+  aspect-ratio: auto;
+  min-height: 600px;
+  padding: 0;
+}
 
 .project-tag-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
 .project-index { font-size: 11px; color: var(--gray-3); letter-spacing: 0.06em; }
@@ -358,12 +408,64 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
   letter-spacing: -0.04em; margin: auto 0; user-select: none;
 }
 
-.project-name { font-size: 22px; font-weight: 500; margin-bottom: 8px; letter-spacing: -0.01em; }
-.project-desc { font-size: 13px; color: var(--gray-4); line-height: 1.6; margin-bottom: 24px; max-width: 280px; }
-.project-meta { display: flex; gap: 24px; }
+.project-cover {
+  width: 100%; margin: 20px 0;
+  aspect-ratio: 16 / 10;
+  background: var(--white);
+  border: 0.5px solid var(--gray-1);
+  border-radius: 2px;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-cover img {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* Policy: single screenshot, fills */
+.project-cover.cover-fill { padding: 0; aspect-ratio: 16 / 10; }
+.project-cover.cover-fill img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+/* Policy specifically: contain, no zoom */
+.project-cover.cover-fill.cover-fit { padding: 8px; }
+.project-cover.cover-fill.cover-fit img {
+  object-fit: contain;
+  object-position: center;
+}
+/* AgriAssist: two stacked images */
+.project-cover.cover-stack {
+  padding: 8px;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+  justify-content: center;
+}
+.project-cover.cover-stack img {
+  width: 100%;
+  height: calc(50% - 3px);
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.project-name { font-size: 20px; font-weight: 500; margin-bottom: 6px; letter-spacing: -0.01em; }
+.project-subtitle { font-size: 14px; color: var(--black); line-height: 1.45; margin-bottom: 16px; max-width: 320px; font-weight: 400; }
+.project-desc { font-size: 12px; color: var(--gray-4); line-height: 1.6; margin-bottom: 20px; max-width: 280px; }
+.project-meta { display: flex; gap: 20px; }
 .meta-item { display: flex; flex-direction: column; }
-.meta-num { font-size: 22px; font-weight: 400; line-height: 1; margin-bottom: 4px; }
-.meta-label { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-3); }
+.meta-num { font-size: 20px; font-weight: 400; line-height: 1; margin-bottom: 4px; }
+.meta-label { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-3); }
 
 /* ─── CASE STUDY OVERLAY ─── */
 .cs-overlay {
@@ -676,18 +778,6 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
   font-size: 28px; color: var(--gray-3);
 }
 
-/* ─── APPROACH ─── */
-#approach { border-bottom: 0.5px solid var(--gray-1); }
-.approach-header { margin-bottom: 80px; }
-.approach-headline {
-  font-family: var(--font-serif); font-size: clamp(28px, 4vw, 44px);
-  font-weight: 400; line-height: 1.2; margin-top: 12px; max-width: 480px;
-}
-.approach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 80px; }
-.approach-num { font-size: 11px; color: var(--gray-3); letter-spacing: 0.06em; margin-bottom: 8px; }
-.approach-title { font-size: 16px; font-weight: 500; margin-bottom: 8px; letter-spacing: -0.01em; }
-.approach-desc { font-size: 13px; color: var(--gray-4); line-height: 1.7; }
-
 /* ─── SKILLS ─── */
 #skills { border-bottom: 0.5px solid var(--gray-1); }
 .skills-header { margin-bottom: 64px; }
@@ -710,23 +800,6 @@ section { padding: 120px 48px; width: 100%; box-sizing: border-box; }
   font-size: 13px; color: var(--gray-4);
 }
 .skill-item:last-child { border-bottom: none; }
-
-/* ─── PRINCIPLES ─── */
-#principles { border-bottom: 0.5px solid var(--gray-1); }
-.principles-header { margin-bottom: 64px; }
-.principles-headline {
-  font-family: var(--font-serif); font-size: clamp(28px, 4vw, 44px);
-  font-weight: 400; line-height: 1.2; margin-top: 12px; max-width: 520px;
-}
-.principles-list { display: flex; flex-direction: column; }
-.principle-item {
-  display: grid; grid-template-columns: 48px 260px 1fr;
-  gap: 40px; align-items: start; padding: 40px 0;
-  border-bottom: 0.5px solid var(--gray-1);
-}
-.principle-num { font-size: 12px; color: var(--gray-3); letter-spacing: 0.06em; padding-top: 3px; }
-.principle-title { font-size: 17px; font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; }
-.principle-desc { font-size: 13px; color: var(--gray-4); line-height: 1.7; }
 
 /* ─── CONTACT ─── */
 #contact { background: var(--black); color: var(--white); }
@@ -768,17 +841,14 @@ footer {
   .nav-links, .nav-actions { display: none; }
   .nav-hamburger { display: flex; }
   .hero-inner { grid-template-columns: 1fr; gap: 40px; align-items: flex-start; }
-  .hero-right { padding-bottom: 0; }
+  .hero-right { padding-top: 0; }
   .hero-blob { width: 320px; height: 320px; left: 80%; }
   .projects-header { flex-direction: column; gap: 20px; margin-bottom: 40px; }
   .projects-grid { grid-template-columns: 1fr; }
   .project-card.featured { grid-column: 1; grid-row: auto; }
-  .approach-grid { grid-template-columns: 1fr; gap: 40px; }
   .skills-grid { grid-template-columns: 1fr; }
   .skill-col { border-right: none; border-bottom: 0.5px solid var(--gray-1); }
   .skill-col:last-child { border-bottom: none; }
-  .principle-item { grid-template-columns: 32px 1fr; grid-template-rows: auto auto; gap: 16px 24px; }
-  .principle-desc { grid-column: 2; margin-top: -8px; }
   .contact-inner { grid-template-columns: 1fr; gap: 48px; }
   footer { flex-direction: column; gap: 8px; padding: 20px 28px; }
   .cs-panel-head { padding: 28px 24px 0; }
@@ -798,9 +868,6 @@ footer {
   .project-card { padding: 28px 24px; min-height: 300px; }
   .skill-col { padding: 28px 24px; }
   .contact-grid { grid-template-columns: 1fr; }
-  .principle-item { grid-template-columns: 1fr; }
-  .principle-num { display: none; }
-  .principle-desc { grid-column: 1; }
 }
 
 @media (hover: none) {
@@ -824,9 +891,8 @@ footer {
   <a href="#" class="nav-logo">Edoardo Caruso</a>
   <ul class="nav-links">
     <li><a href="#projects">Progetti</a></li>
-    <li><a href="#approach">Approccio</a></li>
     <li><a href="#skills">Competenze</a></li>
-    <li><a href="#contact">Contatto</a></li>
+    <li><a href="#contact">Contatti</a></li>
   </ul>
   <div class="nav-actions">
     <a href="portfolio_caruso.pdf" download class="nav-cta-outline" style="min-width:auto; padding:7px 14px; font-size:11.5px; line-height:1;"><span style="margin-right:6px;">↓</span>Portfolio PDF</a>
@@ -841,9 +907,8 @@ footer {
 <div class="nav-mobile-menu" id="mobile-menu">
   <ul class="nav-mobile-links">
     <li><a href="#projects" class="mobile-link">Progetti</a></li>
-    <li><a href="#approach" class="mobile-link">Approccio</a></li>
     <li><a href="#skills" class="mobile-link">Competenze</a></li>
-    <li><a href="#contact" class="mobile-link">Contatto</a></li>
+    <li><a href="#contact" class="mobile-link">Contatti</a></li>
   </ul>
   <div class="nav-mobile-actions">
     <a href="portfolio_caruso.pdf" download class="nav-cta-outline" style="min-width:auto; padding:7px 14px; font-size:11.5px; line-height:1;"><span style="margin-right:6px;">↓</span>Portfolio PDF</a>
@@ -858,14 +923,13 @@ footer {
   <div class="hero-inner">
     <div>
       <h1 class="hero-headline">
-        <span class="word"><span class="word-inner">Designing</span></span><br>
-        <span class="word"><span class="word-inner">the conditions</span></span><br>
-        <em><span class="word"><span class="word-inner">for thinking</span></span></em>
+        <span class="word"><span class="word-inner">Research</span></span> <span class="word"><span class="word-inner accent-word">first</span></span>
       </h1>
+      <div class="hero-name">Edoardo Caruso<span class="hero-name-sep"> — </span><em>UX / Service Designer</em></div>
+      <a href="#projects" class="hero-scroll-link">Progetti <span class="hero-scroll-arrow">→</span></a>
     </div>
     <div class="hero-right">
-      <p class="hero-bio">Lavoro all'incrocio tra UX, UI e Service Design.<br>Mi interessano i sistemi complessi, i contesti ad alta incertezza e i progetti dove la ricerca precede il progetto e lo attraversa.</p>
-      <a href="https://www.linkedin.com/in/edoardo-caruso-ux/" target="_blank" class="hero-link">LinkedIn / profilo</a>
+      <p class="hero-bio">UX/Service Designer junior con background in psicologia e qualificazione ISIPM-Base. Progetto servizi e sistemi complessi attraverso ricerca utenti, system mapping e design centrato sulle persone. La mia tesi esplora l'AI come supporto ai processi decisionali pubblici, con approccio research through design e <span style="white-space:nowrap;">human-in-the-loop</span>.</p>
     </div>
   </div>
 </section>
@@ -888,10 +952,13 @@ footer {
           <span class="tag">Microsoft</span>
         </div>
       </div>
-      <div class="project-monogram">AG</div>
+      <div class="project-cover cover-stack">
+        <img src="assets/agriassist-dashboard.png" alt="AgriAssist — dashboard policymaker Nkosi" loading="lazy">
+        <img src="assets/agriassist-telefono.png" alt="AgriAssist — app mobile" loading="lazy">
+      </div>
       <div>
         <div class="project-name">AgriAssist</div>
-        <p class="project-desc">Sistema multilivello adattivo per l'agricoltura data-driven e il policymaking. Da SMS a dashboard AI: cinque touchpoint, un'unica infrastruttura, contesti geografici con connettività radicalmente diversa. Brief Microsoft, team di 7 persone.</p>
+        <p class="project-subtitle">Sei prototipi navigabili — SMS, app, dashboard — sulla stessa infrastruttura dati.</p>
         <div class="project-meta">
           <div class="meta-item"><span class="meta-num">7</span><span class="meta-label">team members</span></div>
           <div class="meta-item"><span class="meta-num">4</span><span class="meta-label">contesti geo.</span></div>
@@ -913,10 +980,12 @@ footer {
           <span class="tag">Tesi</span>
         </div>
       </div>
-      <div class="project-monogram" style="font-size:64px;">PA</div>
+      <div class="project-cover cover-fill cover-fit">
+        <img src="assets/policy-cover.png" alt="Policy Assistant — interfaccia chat con citazione delle fonti" loading="lazy">
+      </div>
       <div>
         <div class="project-name">Policy Assistant</div>
-        <p class="project-desc">Un assistente per il processo di deliberazione normativa. Non l'intelligenza artificiale al posto delle istituzioni, ma al loro fianco. Studio accademico, postura critica, tesi magistrale LUMSA.</p>
+        <p class="project-subtitle">Interfaccia AI con grounding, citazione fonti e tracciabilità delle analisi.</p>
         <div class="project-meta">
           <div class="meta-item"><span class="meta-num">5</span><span class="meta-label">interviste</span></div>
           <div class="meta-item"><span class="meta-num">7</span><span class="meta-label">principi prog.</span></div>
@@ -938,10 +1007,12 @@ footer {
           <span class="tag">Tirocinio</span>
         </div>
       </div>
-      <div class="project-monogram" style="font-size:64px;">BH</div>
+      <div class="project-cover cover-fill">
+        <img src="assets/bhop-cover.png" alt="B-Hop Magazine — confronto menu rubriche prima/dopo" loading="lazy">
+      </div>
       <div>
         <div class="project-name">B-Hop Magazine</div>
-        <p class="project-desc">Ottimizzazione UX di una testata di giornalismo costruttivo. Dalla richiesta vaga a una domanda progettuale precisa. Unico designer, sei mesi di tirocinio curriculare, research first.</p>
+        <p class="project-subtitle">Audit UX in otto prospettive, prototipo Figma e checklist operativa per il team.</p>
         <div class="project-meta">
           <div class="meta-item"><span class="meta-num">8</span><span class="meta-label">prospettive audit</span></div>
           <div class="meta-item"><span class="meta-num">5</span><span class="meta-label">utenti testati</span></div>
@@ -1438,40 +1509,12 @@ footer {
   </div>
 </div>
 
-<!-- APPROACH -->
-<section id="approach">
-  <div class="approach-header reveal">
-    <div class="section-label">B / 02 — Metodo</div>
-    <h2 class="approach-headline">Quattro modi<br>di attraversare<br>un problema</h2>
-  </div>
-  <div class="approach-grid">
-    <div class="approach-item reveal">
-      <div class="approach-num">01</div>
-      <div class="approach-title">UX Research</div>
-      <p class="approach-desc">Interviste, desk research, usability testing. Capire i problemi reali prima di proporre soluzioni. I dati non confermano le ipotesi: le selezionano.</p>
-    </div>
-    <div class="approach-item reveal">
-      <div class="approach-num">02</div>
-      <div class="approach-title">Service Design</div>
-      <p class="approach-desc">Journey map, service blueprint, architettura sistemica. Progettare touchpoint coerenti che funzionano insieme, dalla discovery al post-servizio.</p>
-    </div>
-    <div class="approach-item reveal">
-      <div class="approach-num">03</div>
-      <div class="approach-title">UI Design</div>
-      <p class="approach-desc">Design system, prototipazione, content first. L'interfaccia come manifestazione dei principi progettuali: ogni schermata è una scelta, non un'operazione meccanica.</p>
-    </div>
-    <div class="approach-item reveal">
-      <div class="approach-num">04</div>
-      <div class="approach-title">Strategic Design</div>
-      <p class="approach-desc">Posizionamento critico, pensiero prospettico, speculative design per contesti ad alta complessità e incertezza decisionale strutturale.</p>
-    </div>
-  </div>
-</section>
+<!-- APPROACH section removed (per senior feedback) -->
 
 <!-- SKILLS -->
 <section id="skills">
   <div class="skills-header reveal">
-    <div class="section-label">C / 03 — Competenze</div>
+    <div class="section-label">B / 02 — Competenze</div>
     <h2 class="skills-headline">UX, UI, Service Design<br>Tre discipline, sapere quando usarle</h2>
   </div>
   <div class="skills-grid reveal">
@@ -1514,41 +1557,13 @@ footer {
   </div>
 </section>
 
-<!-- PRINCIPLES -->
-<section id="principles">
-  <div class="principles-header reveal">
-    <div class="section-label">D / 04 — Principi</div>
-    <h2 class="principles-headline">Quattro principi<br>che guidano il lavoro</h2>
-  </div>
-  <div class="principles-list">
-    <div class="principle-item reveal">
-      <span class="principle-num">I</span>
-      <div class="principle-title">Research first</div>
-      <p class="principle-desc">Prima di formulare ipotesi, vale la pena capire il contesto. La ricerca non è una fase preliminare: attraversa tutto il processo e orienta le scelte progettuali anche quando i dati sono parziali o ambigui.</p>
-    </div>
-    <div class="principle-item reveal">
-      <span class="principle-num">II</span>
-      <div class="principle-title">Trasformare la domanda</div>
-      <p class="principle-desc">Un brief è sempre un punto di partenza, non una destinazione. La prima attività progettuale è capire cosa c'è davvero dietro la richiesta: spostarsi dal "cosa cambiare" al "perché cambiarlo e per chi" cambia la direzione di tutto il lavoro successivo.</p>
-    </div>
-    <div class="principle-item reveal">
-      <span class="principle-num">III</span>
-      <div class="principle-title">Sapere quando non fare</div>
-      <p class="principle-desc">Non ogni problema identificato va risolto nello stesso progetto. Riconoscere i limiti del contesto, documentare le scelte di non intervento e saperle argomentare con i dati fa parte del lavoro di design tanto quanto produrre output.</p>
-    </div>
-    <div class="principle-item reveal">
-      <span class="principle-num">IV</span>
-      <div class="principle-title">Stratificare, non semplificare</div>
-      <p class="principle-desc">Progettare per contesti diversi non significa ridurre tutto al minimo comune denominatore. Significa costruire sistemi che si adattano senza perdere coerenza: il vincolo, tecnologico o di contesto, diventa spesso il punto di partenza più interessante.</p>
-    </div>
-  </div>
-</section>
+<!-- PRINCIPLES section removed (per senior feedback) -->
 
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner">
     <div>
-      <div class="section-label" style="color:rgba(248,247,244,0.35);">E / 05 — Contatto</div>
+      <div class="section-label" style="color:rgba(248,247,244,0.35);">C / 03 — Contatti</div>
       <h2 class="contact-headline reveal">Lavoriamo<br>insieme</h2>
     </div>
     <div class="contact-right reveal">
@@ -1574,7 +1589,6 @@ footer {
 
 <footer>
   <span>© Edoardo Caruso 2026 <span style="color:var(--accent);">·</span> Roma, Italia</span>
-  <a href="portfolio_caruso.pdf" download style="color:inherit; text-decoration:none;"><span style="margin-right:6px;">↓</span>Portfolio PDF</a>
   <span>UX / UI / Service Design</span>
 </footer>
 
@@ -1679,7 +1693,12 @@ function closeCS(id) {
 }
 
 document.querySelectorAll('.project-card[data-cs]').forEach(card => {
-  // Card click disabled — use the buttons inside each card
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', (e) => {
+    // se il click è su un bottone, link o loro contenuti interni, lascia gestire a loro
+    if (e.target.closest('button, a')) return;
+    openCS(card.dataset.cs);
+  });
 });
 
 document.querySelectorAll('.cs-close').forEach(btn => {
